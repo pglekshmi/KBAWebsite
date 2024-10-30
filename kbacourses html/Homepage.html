@@ -37,7 +37,7 @@
             console.log(value1);
 
             localStorage.setItem('course', value1);
-            window.location.href = '/viewCourse.html'
+            window.location.href = '/kbacourses html/viewCourse.html'
 
         }
         async function viewCourse() {
@@ -66,13 +66,15 @@
                     coursename.value = course[0]
                     coursename.innerHTML = course[0];
                     const image = document.createElement("img");
-                    image.src = "./download.png";
+                    image.src = "/kbacourses html/images/download.png";
                     const description = document.createElement("p");
                     description.innerHTML = course[1].Description;
                     const more = document.createElement("input");
                     more.onclick = function () {
                         handleMore(course[0]);
                     };
+                    // more.onclick =handleMore;
+                
                     more.type = 'submit';
                     more.value = 'View More'
                     more.style.border = '2px solid black';
@@ -96,10 +98,15 @@
         async function logout() {
             console.log("hello");
 
-            const response = await fetch("http://127.0.0.1:8000/logout");
+            const response = await fetch("http://127.0.0.1:8000/user/logout",
+                {
+                    method:'GET',
+                    credentials:'include'
+                }
+            );
             const data = await response.json();
             if (response.status == 200) {
-                window.location.href = '/login.html'
+                window.location.href = '/kbacourses html/login.html'
             }
             else {
                 alert("Try after some time")
@@ -119,11 +126,11 @@
 
         </div>
         <div class='flex justify-center md:justify-end items-center mt-2 md:mt-0 space-x-5 md:space-x-10'>
-            <a href="#" class='ml-20'>Home</a>
-            <a href="#" class='ml-20'>Courses</a>
+            <a href="/kbacourses html/Homepage.html" class='ml-20'>Home</a>
+      
             <a href="#" class='ml-20'>Contact Us</a>
 
-            <a href="/add-course.html" id="admin" class='ml-20' style="display: none;">Add Course</a>
+            <a href="/kbacourses html/add-course.html" id="admin" class='ml-20' style="display: none;">Add Course</a>
             <a class='ml-20' href="#" onclick="logout()">Logout</a>
         </div>
     </div>

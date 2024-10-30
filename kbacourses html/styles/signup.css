@@ -1,0 +1,39 @@
+body{
+    background-color: rgb(212, 173, 248);
+}
+h1{
+    color: blueviolet;
+    text-align: center;
+}
+.container{
+    width: 400px;
+    height: 500px;
+    background-color: white;
+    border-radius: 15px;
+    align-items: center;
+    margin-left: 450px;
+    margin-top: 40px;
+    font-size: 20px;
+    padding: 20px;
+}
+.button1{
+    margin-left: 100px;
+     background-color: blueviolet;
+     color: black;
+     height:35px ;
+     width: 100px; 
+     /* border-style:groove ;   */
+    }
+    .in1{
+        margin-top: 10px;
+        margin-bottom: 10px;
+        height: 25px;
+        border-radius: 5px;
+        border-color: black;
+    }
+    .enter{
+        margin: 30px; 
+    }
+    select{
+        width: 305px;
+    }

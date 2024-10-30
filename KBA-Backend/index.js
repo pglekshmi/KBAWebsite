@@ -15,12 +15,16 @@ app.use(json());
 // }))
 
 app.use(cors({
-    origin:'http://127.0.0.1:5501',
+    origin:'http://127.0.0.1:5500',
     credentials:true
 }))
 // app.use(cors())
 app.use(cookieParser());
 app.use('/',adminRoute);
+// app.use('/',functRoute)
+
+
+
 app.use('/user',userRoute);
 
 app.get('/', function (req, res) {

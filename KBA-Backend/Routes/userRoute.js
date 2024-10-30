@@ -3,8 +3,9 @@ import authenticate from "../Middleware/auth.js";
 import { course } from "./adminRoute.js";
 const userRoute=Router();
 const cart=new Map();
-userRoute.put('/addCart', authenticate, async (req, res) => {
-
+userRoute.post('/addCart', authenticate, async (req, res) => {
+    console.log("Hi");
+    
     const UserRole = req.userrole;
     const UserName = req.username;
     console.log(UserRole, "hi user");
@@ -28,12 +29,40 @@ userRoute.put('/addCart', authenticate, async (req, res) => {
 
             try {
                 const data = cart.get(UserName);
+                console.log(data);
+                
                 if (data) {
-                    data.push(cartDetails);
-                    console.log(cart.get(UserName));
-                    res.status(201).json({ message: "Item added to cart" })
-                }
+                    console.log("old")
+                    console.log(data);
+                    let f=0;
+                    data.forEach(x=>{
+                        console.log(x.CourseName,CourseName);
+                        
+                        if(x.CourseName==CourseName){
+                            // res.status(400).json({message:'Check the input'})
+                            f=1;
+                            
+                        }
+                    })
+                        console.log(f);
+                        
+                        if(f==0){
+                        data.push(cartDetails);
+                        cart.set(UserName,data);
+                        console.log(cart.get(UserName));
+                        res.status(201).json({ message: "Item added to cart" })
+                        }
+                        else{
+                            res.status(401).json({message:'Already on cart'})
+                        }
+                    
+                    
+                    
+             
+                    }
                 else {
+                    console.log("new");
+                    
                     cart.set(UserName, cartArray);
 
 
@@ -88,7 +117,7 @@ userRoute.get('/buyCart', authenticate, async (req, res) => {
     })
     
     console.log(total);
-    cart.delete(UserName);
+    // cart.delete(UserName);
     res.send(total.toString())
 }
     catch{
@@ -97,7 +126,7 @@ userRoute.get('/buyCart', authenticate, async (req, res) => {
    
 })
 
-userRoute.post('/logout',(req,res)=>{
+userRoute.get('/logout',(req,res)=>{
     res.clearCookie('authToken'); // 'authToken' is the cookie name
     res.status(200).json({ message: 'Logout successful' });
 })

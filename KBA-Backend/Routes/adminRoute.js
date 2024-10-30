@@ -9,6 +9,7 @@ dotenv.config();
 const adminRoute = Router();
 const user = new Map();
 const course = new Map();
+const cart=new Map();
 const secret_key = process.env.Secret_Key;
 
 // adminRoute.get('/', function (req, res) {
@@ -243,6 +244,69 @@ catch{
     res.status(404).json({message:'Unauthorized acess'})
 }
 })
+
+// adminRoute.post('/addCart', authenticate, async (req, res) => {
+//     console.log("Hi");
+    
+//     const UserRole = req.userrole;
+//     const UserName = req.username;
+//     console.log(UserRole, "hi user");
+//     console.log(UserName, "name");
+
+//     try {
+//         if (UserRole == 'user'||UserRole=='admin') {
+//             const  {CourseName}  = req.body;
+//             console.log(CourseName);
+
+//             const courseDetails = course.get(CourseName);
+//             console.log(courseDetails);
+
+//             const cartDetails = {
+//                 CourseName,
+//                 Price: courseDetails.Price,
+//             }
+//             let cartArray = [];
+//             cartArray.push(cartDetails);
+//             console.log(cartArray);
+
+//             try {
+//                 const data = cart.get(UserName);
+//                 console.log(data);
+                
+//                 if (data) {
+//                     log("old")
+//                     data.push(cartDetails);
+//                     cart.set(UserName,data);
+//                     console.log(cart.get(UserName));
+//                     res.status(201).json({ message: "Item added to cart" })
+//                 }
+//                 else {
+//                     console.log("new");
+                    
+//                     cart.set(UserName, cartArray);
+
+
+//                     console.log(cart.get(UserName));
+
+//                     res.status(201).json({ message: "Item added to cart" })
+//                 }
+//             }
+
+//             catch (error) {
+//                 res.status(400).json({ message: "Check the input" })
+//             }
+
+//         }
+//         else {
+//             res.status(400).json({ message: "Unauthorized Access" });
+//         }
+//     }
+//     catch (error) {
+//         res.status(500).json({ message: "Check the bookName" });
+//     }
+
+
+// })
 
 adminRoute.get('/logout', (req, res) => {
     res.clearCookie('authToken'); // 'authToken' is the cookie name

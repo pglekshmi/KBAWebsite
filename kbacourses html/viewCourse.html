@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learn More</title>
-    <link rel="stylesheet" href="/stylecss/learn.css">
+    <link rel="stylesheet" href="/kbacourses html/styles/learn.css">
     <script>
-        let name;
+          const name=localStorage.getItem('course');
         window.onload=async()=>{
             console.log("hi");
+           
             try{
             
            const response1=await fetch("http://127.0.0.1:8000/viewUser",{
             method:'GET',
            credentials: 'include', 
+         
             });
            
            
@@ -27,7 +29,7 @@
            catch(error){
             console.log(error);}
             
-             name=localStorage.getItem('course');
+            
             console.log(name);
             const response=await fetch(`http://127.0.0.1:8000/getCourse?courseName=${name}`);
             console.log(response);
@@ -43,7 +45,7 @@
             }
         }
         function gotoPage(){
-            window.location.href='/edit-course.html'
+            window.location.href='/kbacourses html/edit-course.html'
         }
         async function deleteCourse(){
             console.log(name);
@@ -78,26 +80,52 @@
                 alert("Try after some time")
             }
         }
+        async function handleCart(){
+            console.log(name);
+            
+           const response=await fetch("http://127.0.0.1:8000/user/addCart",{
+                                    method:'POST',
+                                    credentials:'include',
+                                     headers:{
+                                    'Content-Type':'application/json'
+                                        },
+                                     body:JSON.stringify(
+                                         {
+                                           CourseName:name
+                                         })
+                            })
+                            console.log(response);
+                            if(response.status==201){
+                                alert("Item added to cart")
+                            }
+                            else if(response.status==401){
+                                alert("Item already on cart");
+                            }
+                            else{
+                                alert("Server error...Try after sometime");
+                            }
+                            
+                        }
     </script>
 </head>
 <body>
     <nav>
-        <div class="div1"><img src="banner-kba.png" alt=""></div>
+        <div class="div1"><img src="/kbacourses html/images/kbalogo.jpeg" alt=""></div>
         <div class="div2" class='flex justify-center md:justify-end items-center mt-2 md:mt-0 space-x-5 md:space-x-10' >
-        <a class='ml-20' href="/Homepage.html">Home</a>
-        <a class='ml-20' href="courses.html">Courses</a>
+        <a class='ml-20' href="/kbacourses html/Homepage.html">Home</a>
+        
         <a class='ml-20' href="contact.html">Contact Us </a>
-        <a class='ml-20' href="/add-course.html" style="display: none;">Add Course</a>
+        <a class='ml-20' href="/kbacourses html/add-course.html" style="display: none;">Add Course</a>
         <a class='ml-20' href="#" onclick="logout()">Logout</a>
         </div>
     
     </nav>
      <br>
-     <a href="" class="btc">Back to course</a>
+     
      <br>
      <br>
      <div class="container">
-       <img src="" alt="">
+       <img src="/kbacourses html/images/banner-kba.png" alt="">
         
                <div class="line">
                 <div class="frist">
@@ -107,11 +135,13 @@
                     <div class="sec">
                     <h3 id="price">RS 15000</h1>    
                 </div>
+            </div>
+        </br>
+
           
-          
-                <button class="button1" type="submit" value="Add to cart">Add to Cart</button>
-  
-                </div>
+                <button class="button1" type="submit" value="Add to cart" onclick="handleCart()">Add to Cart</button>
+                <a class="button1" style="text-decoration: none;" href="/kbacourses html/viewCart.html">View Cart</a>
+               
 
                </div>
             
@@ -135,8 +165,8 @@
         </ul>
     </div>
      </div>
-     <div class="buttonset"> 
-        <button class="buttonblue" type="submit" value="Edit Course" onclick="gotoPage()"> Edit Course</button>
+     <div class="buttonset" id="admin" style="display: none;"> 
+        <button class="buttonblue" type="submit"   value="Edit Course" onclick="gotoPage()"> Edit Course</button>
         <button class="buttonred" type="submit" value="Remove Course" onclick="deleteCourse()"> Remove Course</button>
      </div>
 </body>

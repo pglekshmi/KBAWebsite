@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn More</title>
+    <link rel="stylesheet" href="/stylecss/learn.css">
+    <script>
+        window.onload=async ()=>{
+
+            const response= await fetch("http://127.0.0.1:8000/user/viewCart",{
+                credentials:"include"
+            });
+            const data = await response.json();
+            console.log(data);
+            if(data){
+                const container=document.getElementById("cart")
+                container.style.border='1px outset'
+                container.style.width='400px'
+                container.style.padding='5px'
+                container.innerHTML='';
+                let bord;
+            data.forEach(item => {
+                console.log(item);
+                
+                 bord= document.createElement("div");
+                 bord.style.border = '2px groove ';
+                 bord.style.width = '250px';
+
+                 const itemN=document.createElement("h1");
+                 itemN.innerHTML=item.CourseName;
+
+                 const itemP=document.createElement("p");
+                 itemP.innerHTML="Rs"+item.Price;
+
+                 bord.appendChild(itemN);
+                 bord.appendChild(itemP);
+                 container.appendChild(bord);
+                 
+            });
+            const buyButton = document.createElement("input");
+            buyButton.type='submit',
+            buyButton.onclick=handleBuy;
+            buyButton.value='Pay Now'
+           
+            container.appendChild(buyButton);
+        }
+            
+            
+        }
+        function handleBuy(){
+            window.location.href="/kbacourses html/payment.html"
+        }
+        async function logout() {
+            console.log("hello");
+
+            const response = await fetch("http://127.0.0.1:8000/user/logout",
+                {
+                    method:'GET',
+                    credentials:'include'
+                }
+            );
+            const data = await response.json();
+            if (response.status == 200) {
+                window.location.href = '/kbacourses html/login.html'
+            }
+            else {
+                alert("Try after some time")
+            }
+        }
+    </script>
+</head>
+<body>
+    <nav>
+        <div class="div1"><img src="/kbacourses html/images/banner-kba.png" alt=""></div>
+        <div class="div2" class='flex justify-center md:justify-end items-center mt-2 md:mt-0 space-x-5 md:space-x-10' >
+        <a class='ml-20' href="/kbacourses html/Homepage.html">Home</a>
+       
+        <a class='ml-20' href="contact.html">Contact Us </a>
+        <a class='ml-20' href="/kbacourses html/add-course.html" style="display: none;">Add Course</a>
+        <a class='ml-20' href="#" onclick="logout()">Logout</a>
+        </div>
+    
+    </nav>
+     <h1> Your Cart</h1>
+     <div id="cart"></div>
+</body>
+</html>

@@ -3,9 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    
     <link rel="icon" type="image/png" href="/favicon.ico" />
     <title>Blockchain Courses</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
       async function handleForm(){
         const courseName=document.getElementById("title").value;
@@ -37,6 +38,23 @@
         } 
         
       }
+      async function logout() {
+            console.log("hello");
+
+            const response = await fetch("http://127.0.0.1:8000/user/logout",
+                {
+                    method:'GET',
+                    credentials:'include'
+                }
+            );
+            const data = await response.json();
+            if (response.status == 200) {
+                window.location.href = '/kbacourses html/login.html'
+            }
+            else {
+                alert("Try after some time")
+            }
+        }
     </script>
   </head>
 <body>
@@ -50,10 +68,11 @@
             
         </div>
         <div class='flex justify-center md:justify-end items-center mt-2 md:mt-0 space-x-5 md:space-x-10'>
-            <a href="/Homepage.html" class='ml-20'>Home</a>
-            <a href="/viewCourse.html" class='ml-20'>Courses</a>
-            <a href="/contact.html" class='ml-20'>Contact Us</a>
-            <a href="/add-course.html" class='ml-20'>Add Course</a>
+          <a class='ml-20' href="/kbacourses html/Homepage.html">Home</a>
+        
+          <a class='ml-20' href="contact.html">Contact Us </a>
+          <a class='ml-20' href="/kbacourses html/add-course.html" style="display: none;">Add Course</a>
+          <a class='ml-20' href="#" onclick="logout()">Logout</a>
         </div>
     </div>
 
